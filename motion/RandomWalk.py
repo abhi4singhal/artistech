@@ -1,7 +1,7 @@
 import numpy as np
 
 
-class BrownianMotion:
+class RandomWalk:
     def __init__(self, step_size=0.1, num_directions=4):
         self.step_size = step_size
         self.number_directions = num_directions
