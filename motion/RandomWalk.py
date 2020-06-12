@@ -1,14 +1,13 @@
 import numpy as np
+from .Motion import Motion
 
 
-class RandomWalk:
-    def __init__(self, step_size=0.1, num_directions=4):
+class RandomWalk(Motion):
+    def __init__(self, num_steps, step_size=0.1, num_directions=4, **kwargs):
+        super().__init__(num_steps, **kwargs)
         self.step_size = step_size
         self.number_directions = num_directions
+        self.directions = np.exp(1j * np.linspace(0, 2 * np.pi, self.number_directions + 1))[:-1]
 
-    def get_motion_path(self, iter_num):
-        directions = np.exp(1j * np.linspace(0, 2 * np.pi, self.number_directions + 1))[:-1]
-        path = np.zeros(iter_num, dtype='complex128')
-        for i in range(1, iter_num):
-            path[i] = path[i - 1] + self.step_size * np.random.choice(directions)
-        return path
+    def get_next_step(self):
+        return self.step_size * np.random.choice(self.directions)
